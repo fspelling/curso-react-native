@@ -5,7 +5,10 @@ export default class Contador extends Component {
     render() {
         return (
             <View>
-                <Text>{this.props.numero}</Text>
+                <Text style={{ fontSize: 40 }}>{this.props.numero}</Text>
+                <TouchableHighlight>
+                    <Text>Incrementar/zerar</Text>
+                </TouchableHighlight>
             </View>
         );
     }
