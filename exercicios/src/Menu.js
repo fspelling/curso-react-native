@@ -7,6 +7,8 @@ import Inverter, { MegaSena } from './componentes/Multi';
 import Contador from './componentes/Contador';
 import Plataforma from './componentes/Plataforma';
 import ValidarProps from './componentes/ValidarProps';
+import Evento from './componentes/Evento';
+import Comunicacao from './componentes/ComunicacaoDifera';
 
 export default createDrawerNavigator({
     Plataforma: {
@@ -51,6 +53,18 @@ export default createDrawerNavigator({
         screen: () =>
             <View style={styles.container}>
                 <ValidarProps ano={2000} />
+            </View>
+    },
+    Evento: {
+        screen: () =>
+            <View style={styles.container}>
+                <Evento />
+            </View>
+    },
+    Comunicacao: {
+        screen: () =>
+            <View style={styles.container}>
+                <Comunicacao nome='Joao' sobrenome='Silva' />
             </View>
     }
 }, { drawerWidth: 300 });
