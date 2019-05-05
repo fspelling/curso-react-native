@@ -14,7 +14,7 @@ const Pai = (props) =>
     (
         <View>
             <Text {...fonte}>Pai: {props.nome} {props.sobrenome}</Text>
-            {props.children}
+            {React.Children.map(props.children, c => React.cloneElement(c, {...props, ...c.props}))}
         </View>
     );
 
@@ -34,4 +34,5 @@ const Avo = (props) =>
         </View>
     );
 
+export default Avo;
 export { Filho, Pai, Avo };

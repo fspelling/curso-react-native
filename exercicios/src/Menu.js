@@ -8,7 +8,9 @@ import Contador from './componentes/Contador';
 import Plataforma from './componentes/Plataforma';
 import ValidarProps from './componentes/ValidarProps';
 import Evento from './componentes/Evento';
-import Comunicacao from './componentes/ComunicacaoDifera';
+import Avo from './componentes/ComunicacaoDifera';
+import TextoSincronazado from './componentes/ComunicacaoIndireta';
+import ListaAlunos from './componentes/ListaFlex';
 
 export default createDrawerNavigator({
     Plataforma: {
@@ -64,8 +66,17 @@ export default createDrawerNavigator({
     Comunicacao: {
         screen: () =>
             <View style={styles.container}>
-                <Comunicacao nome='Joao' sobrenome='Silva' />
+                <Avo nome='Joao' sobrenome='Silva' />
             </View>
+    },
+    TextoSincronazado: {
+        screen: () =>
+            <View style={styles.container}>
+                <TextoSincronazado />
+            </View>
+    },
+    ListaAlunos: {
+        screen: ListaAlunos, navigationOptions: { title: 'Lista alunos' }
     }
 }, { drawerWidth: 300 });
 

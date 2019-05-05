@@ -14,7 +14,8 @@ export default StyleSheet.create({
         height: 70,
         fontSize: 40,
         borderColor: 'gray',
-        borderWidth: 1
+        borderWidth: 1,
+        width: 300
     },
     font40: {
         fontSize: 40
