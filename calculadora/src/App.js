@@ -3,26 +3,69 @@ import { StyleSheet, View } from 'react-native';
 import Button from './componentes/Button';
 import Display from './componentes/Display';
 
+const stateInitial = {
+  displayValue: '0',
+  clearDisplay: false,
+  operation: null,
+  value: [0, 0],
+  corrent: 0
+};
+
 export default class App extends React.Component {
-  state = {
-    displayValue: '0'
-  };
+  state = { ...stateInitial };
 
   addDigit = (n) => {
-    this.setState({ displayValue: n });
+    if (n === '.' && this.state.displayValue.includes('.')) return;
+
+    const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay;
+    const correntValue = clearDisplay ? '' : this.state.displayValue;
+    const displayValue = `${correntValue}${n}`;
+
+    this.setState({ displayValue, clearDisplay: false });
+
+    if (n !== '.') {
+      const newValue = parseFloat(displayValue);
+      const value = [...this.state.value];
+      value[this.state.corrent] = newValue;
+
+      this.setState({ value });
+    }
   }
 
   clearCalc = () => {
-    this.setState({ displayValue: '0' });
+    this.setState({ ...stateInitial });
   }
 
-  setOperation = (operator) => {
+  setOperation = (operation) => {
+    if (this.state.corrent === 0) {
+      this.setState({ operation, clearDisplay: true });
+    } else {
+      const equals = operation === '=';
+      const value = [...this.state.value];
+
+      try {
+        value[0] = eval(`${value[0]} ${this.state.operation} ${value[1]}`);
+      }
+      catch (e) {
+        value[0] = this.state.value[0];
+      }
+
+      value[1] = 0;
+
+      this.setState({
+        displayValue: value[0],
+        operation: equals ? null : operation,
+        corrent: equals ? 0 : 1,
+        clearDisplay: !equals,
+        value
+      });
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Display value={this.state.displayValue}/>
+        <Display value={this.state.displayValue} />
         <View style={styles.buttons}>
           <Button label='AC' triple onClick={this.clearCalc} />
           <Button label='/' operation onClick={() => this.setOperation('/')} />
