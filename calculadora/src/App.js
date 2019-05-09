@@ -57,7 +57,7 @@ export default class App extends React.Component {
         displayValue: value[0].toString(),
         operation: equals ? null : operation,
         corrent: equals ? 0 : 1,
-        clearDisplay: equals,
+        clearDisplay: !equals,
         value
       });
     }
