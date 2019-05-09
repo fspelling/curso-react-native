@@ -1,49 +1,18 @@
 {
-  "result": [
-    {
-      "CODIGO_NCM": "01012100",
-      "EX": "0",
-      "TIPO": "0",
-      "NACIONAL_FEDERAL": "22",
-      "IMPORT_FEDERAL": "12",
-      "ESTADUAL": "4",
-      "MUNICIPAL": "10",
-      "INICIO_VIGENCIA": "01-01-2019",
-      "FIM_VIGENCIA": "12-12-2019",
-      "CHAVE": "DDP7",
-      "VERSAO": "19.B",
-      "FONTE": "-",
-      "DESC_UF": "SP"
-    },
-    {
-      "CODIGO_NCM": "01012100",
-      "EX": "0",
-      "TIPO": "0",
-      "NACIONAL_FEDERAL": "22",
-      "IMPORT_FEDERAL": "12",
-      "ESTADUAL": "4",
-      "MUNICIPAL": "10",
-      "INICIO_VIGENCIA": "01-01-2019",
-      "FIM_VIGENCIA": "12-12-2019",
-      "CHAVE": "DDP7",
-      "VERSAO": "19.B",
-      "FONTE": "-",
-      "DESC_UF": "SP"
-    },
-    {
-      "CODIGO_NCM": "01012100",
-      "EX": "0",
-      "TIPO": "0",
-      "NACIONAL_FEDERAL": "22",
-      "IMPORT_FEDERAL": "12",
-      "ESTADUAL": "4",
-      "MUNICIPAL": "10",
-      "INICIO_VIGENCIA": "01-01-2019",
-      "FIM_VIGENCIA": "12-12-2019",
-      "CHAVE": "DDP7",
-      "VERSAO": "19.B",
-      "FONTE": "-",
-      "DESC_UF": "SP"
-    }
-  ]
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "expo": "^32.0.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^5.0.0"
+  },
+  "private": true
 }

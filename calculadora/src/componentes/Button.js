@@ -10,13 +10,17 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#f0f0f0',
         borderWidth: 1,
-        boderColor: '#888'
+        borderColor: '#888'
     },
     buttonDouble: {
         width: (Dimensions.get('window').width / 4) * 2
     },
     buttonTriple: {
         width: (Dimensions.get('window').width / 4) * 3
+    },
+    operation: {
+        color: '#fff',
+        backgroundColor: '#fa8231'
     }
 });
 

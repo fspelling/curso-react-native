@@ -15,9 +15,10 @@ export default class App extends React.Component {
   state = { ...stateInitial };
 
   addDigit = (n) => {
-    if (n === '.' && this.state.displayValue.includes('.')) return;
-
     const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay;
+
+    if (n === '.' && !clearDisplay && this.state.displayValue.includes('.')) return;
+
     const correntValue = clearDisplay ? '' : this.state.displayValue;
     const displayValue = `${correntValue}${n}`;
 
@@ -38,7 +39,7 @@ export default class App extends React.Component {
 
   setOperation = (operation) => {
     if (this.state.corrent === 0) {
-      this.setState({ operation, clearDisplay: true });
+      this.setState({ operation, clearDisplay: true, corrent: 1 });
     } else {
       const equals = operation === '=';
       const value = [...this.state.value];
@@ -53,10 +54,10 @@ export default class App extends React.Component {
       value[1] = 0;
 
       this.setState({
-        displayValue: value[0],
+        displayValue: value[0].toString(),
         operation: equals ? null : operation,
         corrent: equals ? 0 : 1,
-        clearDisplay: !equals,
+        clearDisplay: equals,
         value
       });
     }
