@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, FlatList, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, FlatList, Platform, TouchableOpacity, AsyncStorage } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import todayImage from '../../assets/imgs/today.jpg';
@@ -11,20 +11,7 @@ import NewTask from './NewTask';
 
 export default class Agenda extends React.Component {
     state = {
-        tasks: [
-            { id: Math.random(), desc: 'C# é bom, mas nem tanto', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Angular é top', estimateAt: new Date(), doneAt: null },
-            { id: Math.random(), desc: 'React native é vida', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Flutter é o futuro', estimateAt: new Date(), doneAt: null },
-            { id: Math.random(), desc: 'C# é bom, mas nem tanto', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Angular é top', estimateAt: new Date(), doneAt: null },
-            { id: Math.random(), desc: 'React native é vida', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Flutter é o futuro', estimateAt: new Date(), doneAt: null },
-            { id: Math.random(), desc: 'C# é bom, mas nem tanto', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Angular é top', estimateAt: new Date(), doneAt: null },
-            { id: Math.random(), desc: 'React native é vida', estimateAt: new Date(), doneAt: new Date() },
-            { id: Math.random(), desc: 'Flutter é o futuro', estimateAt: new Date(), doneAt: null }
-        ],
+        tasks: [],
         visibleTasks: [],
         showDoneTasks: true,
         showModal: false
@@ -41,6 +28,7 @@ export default class Agenda extends React.Component {
         }
 
         this.setState({ visibleTasks });
+        AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks))
     }
 
     toggleFilter = () => {
@@ -64,8 +52,11 @@ export default class Agenda extends React.Component {
         this.setState({ tasks, showModal: false }, this.filterTasks);
     }
 
-    componentDidMount = () => {
-        this.filterTasks();
+    componentDidMount = async () => {
+        const data = await AsyncStorage.getItem('tasks');
+        const tasks = JSON.parse(data) || [];
+
+        this.setState({ tasks }, this.filterTasks());
     }
 
     togleTaskCheck = (id) => {
