@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, FlatList, Platform, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, FlatList, Platform, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import todayImage from '../../assets/imgs/today.jpg';
@@ -28,7 +29,7 @@ export default class Agenda extends React.Component {
         }
 
         this.setState({ visibleTasks });
-        AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks))
+        AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks));
     }
 
     toggleFilter = () => {
@@ -56,7 +57,7 @@ export default class Agenda extends React.Component {
         const data = await AsyncStorage.getItem('tasks');
         const tasks = JSON.parse(data) || [];
 
-        this.setState({ tasks }, this.filterTasks());
+        this.setState({ tasks }, this.filterTasks);
     }
 
     togleTaskCheck = (id) => {
