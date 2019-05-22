@@ -5,6 +5,8 @@ const db = require('./config/db.js');
 
 consign()
     .then('./config/middlewares.js')
+    .then('./api')
+    .then('./config/routes.js')
     .into(app);
 
 app.db = db;
