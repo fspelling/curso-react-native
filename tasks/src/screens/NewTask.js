@@ -10,7 +10,7 @@ import commomStyles from '../commomStyles';
 export default class NewTask extends React.Component {
     constructor(props) {
         super(props);
-        this.setState(this.loadState());
+        this.state = this.loadState();
     }
 
     loadState = () => {
@@ -66,7 +66,7 @@ export default class NewTask extends React.Component {
         return (
             <Modal onRequestClose={this.props.onCancel}
                 visible={this.props.isVisible} animationType='slide'
-                transparent={true} onShow={() => this.setState(this.loadState())}>
+                transparent={true} onShow={() => this.setState({ ...this.loadState() })}>
                 <TouchableWithoutFeedback onPress={this.props.onCancel}>
                     <View style={styles.offset}></View>
                 </TouchableWithoutFeedback>
