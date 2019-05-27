@@ -7,10 +7,18 @@ import moment from 'moment';
 import commonStyle from '../commomStyles';
 import commomStyles from '../commomStyles';
 
-const initialState = { desc: '', date: new Date() };
-
 export default class NewTask extends React.Component {
-    state = { ...initialState };
+    constructor(props) {
+        super(props);
+        this.setState(this.loadState());
+    }
+
+    loadState = () => {
+        return {
+            desc: '',
+            date: new Date()
+        };
+    }
 
     save = () => {
         if (!this.state.desc.trim()) {
@@ -20,7 +28,6 @@ export default class NewTask extends React.Component {
 
         const data = { ...this.state };
         this.props.onSave(data);
-        this.setState({ ...initialState });
     }
 
     handleDateAndroidChenged = () => {
@@ -59,7 +66,7 @@ export default class NewTask extends React.Component {
         return (
             <Modal onRequestClose={this.props.onCancel}
                 visible={this.props.isVisible} animationType='slide'
-                transparent={true}>
+                transparent={true} onShow={() => this.setState(this.loadState())}>
                 <TouchableWithoutFeedback onPress={this.props.onCancel}>
                     <View style={styles.offset}></View>
                 </TouchableWithoutFeedback>
