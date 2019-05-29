@@ -4,8 +4,9 @@ import backgroundImage from '../../assets/imgs/login.jpg';
 import AuthInput from '../componentes/AuthInput';
 import { server, showError } from '../commom';
 import axios from 'axios';
+import commomStyles from '../commomStyles';
 
-export class Auth extends React.Component {
+export default class Auth extends React.Component {
     state = {
         stageNew: false,
         name: '',
@@ -19,7 +20,7 @@ export class Auth extends React.Component {
             try {
                 await axios.post(`${server}/signup`, {
                     name: this.state.name,
-                    email: this.state.email,
+                    address: this.state.email,
                     password: this.state.password,
                     confirmPassword: this.state.confirmPassword
                 });
@@ -33,11 +34,11 @@ export class Auth extends React.Component {
         else {
             try {
                 const res = await axios.post(`${server}/signin`, {
-                    email: this.state.email,
+                    address: this.state.email,
                     password: this.state.password
                 });
 
-                axios.defaults.headers.commom['Authorization'] = `bearer ${res.data.token}`;
+                axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`;
                 this.props.navigation.navigate('Home');
             } catch (erro) {
                 showError(erro);
@@ -87,13 +88,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: commomStyles.fontFamily,
         color: '#FFF',
         fontSize: 70,
         marginBottom: 10,
     },
     subtitle: {
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: commomStyles.fontFamily,
         color: '#FFF',
         fontSize: 20,
     },
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: commomStyles.fontFamily,
         color: '#FFF',
         fontSize: 20
     }
