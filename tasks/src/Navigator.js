@@ -10,17 +10,17 @@ const menuRoutes = {
         screen: (props) => <Agenda title='Hoje' daysAhead={0} {...props} />,
         navigationOption: { title: 'Hoje' }
     },
-    Today: {
+    Tomorow: {
         name: 'Tomorow',
         screen: (props) => <Agenda title='Amanha' daysAhead={1} {...props} />,
         navigationOption: { title: 'Amanha' }
     },
-    Today: {
+    Week: {
         name: 'Week',
         screen: (props) => <Agenda title='Semana' daysAhead={7} {...props} />,
         navigationOption: { title: 'Semana' }
     },
-    Today: {
+    Month: {
         name: 'Month',
         screen: (props) => <Agenda title='Mes' daysAhead={30} {...props} />,
         navigationOption: { title: 'Mes' }
