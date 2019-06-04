@@ -1,23 +1,37 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Gravatar } from 'react-native-gravatar';
 import { DrawerItems } from 'react-navigation';
 import commomStyles from '../commomStyles';
+import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default (props) => {
+    logout = () => {
+        delete axios.defaults.headers.common['Authorization'];
+        AsyncStorage.removeItem('userData');
+        props.navigation.navigate('AuthOrApp');
+    }
+
     return (
         <ScrollView>
             <View style={styles.header}>
                 <Text style={styles.title}>Tasks</Text>
                 <Gravatar style={styles.avatar} options={{
-                    email: props.navigation.getParam('email'),
+                    email: props.navigation.getParam('address'),
                     secure: true
                 }} />
                 <View style={styles.userInfo}>
                     <View>
                         <Text style={styles.name}>{props.navigation.getParam('name')}</Text>
-                        <Text style={styles.email}>{props.navigation.getParam('email')}</Text>
+                        <Text style={styles.email}>{props.navigation.getParam('address')}</Text>
                     </View>
+                    <TouchableOpacity onPress={logout}>
+                        <View style={styles.iconLogout}>
+                            <Icon name='sign-out' color='#800' size={30} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
             <DrawerItems {...props} />
@@ -56,7 +70,8 @@ const styles = StyleSheet.create({
         fontFamily: commomStyles.fontFamily,
         color: commomStyles.colors.subText,
         fontSize: 15,
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 10
     },
     menu: {
         justifyContent: 'center',
@@ -65,5 +80,10 @@ const styles = StyleSheet.create({
     userInfo: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    iconLogout: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 20
     }
 });

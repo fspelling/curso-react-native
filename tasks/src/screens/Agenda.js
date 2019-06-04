@@ -111,7 +111,7 @@ export default class Agenda extends React.Component {
                 <ImageBackground source={backgroundImage} style={styles.background}>
                     <View style={styles.iconBar}>
                         <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
-                            <Icon name='bar' size={20} color={commomStyles.colors.secondary} />
+                            <Icon name='bars' size={20} color={commomStyles.colors.secondary} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.toggleFilter}>
                             <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'} size={20} color={commomStyles.colors.secondary} />

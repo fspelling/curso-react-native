@@ -8,24 +8,24 @@ import AuthOrApp from './screens/AuthOrApp';
 
 const menuRoutes = {
     Today: {
-        name: 'Hoje',
+        name: 'Today',
         screen: (props) => <Agenda title='Hoje' daysAhead={0} {...props} />,
-        navigationOption: { title: 'Hoje' }
+        navigationOptions: { title: 'Hoje' }
     },
     Tomorow: {
-        name: 'Amanha',
+        name: 'Tomorow',
         screen: (props) => <Agenda title='Amanha' daysAhead={1} {...props} />,
-        navigationOption: { title: 'Amanha' }
+        navigationOptions: { title: 'Amanha' }
     },
     Week: {
-        name: 'Semana',
+        name: 'Week',
         screen: (props) => <Agenda title='Semana' daysAhead={7} {...props} />,
-        navigationOption: { title: 'Semana' }
+        navigationOptions: { title: 'Semana' }
     },
     Month: {
-        name: 'Mes',
+        name: 'Month',
         screen: (props) => <Agenda title='Mes' daysAhead={30} {...props} />,
-        navigationOption: { title: 'Mes' }
+        navigationOptions: { title: 'Mes' }
     }
 };
 
