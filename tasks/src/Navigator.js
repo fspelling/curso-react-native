@@ -3,25 +3,26 @@ import { createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
 import Agenda from './screens/Agenda';
 import Auth from './screens/Auth';
 import commomStyles from './commomStyles';
+import Menu from './screens/Menu';
 
 const menuRoutes = {
     Today: {
-        name: 'Today',
+        name: 'Hoje',
         screen: (props) => <Agenda title='Hoje' daysAhead={0} {...props} />,
         navigationOption: { title: 'Hoje' }
     },
     Tomorow: {
-        name: 'Tomorow',
+        name: 'Amanha',
         screen: (props) => <Agenda title='Amanha' daysAhead={1} {...props} />,
         navigationOption: { title: 'Amanha' }
     },
     Week: {
-        name: 'Week',
+        name: 'Semana',
         screen: (props) => <Agenda title='Semana' daysAhead={7} {...props} />,
         navigationOption: { title: 'Semana' }
     },
     Month: {
-        name: 'Month',
+        name: 'Mes',
         screen: (props) => <Agenda title='Mes' daysAhead={30} {...props} />,
         navigationOption: { title: 'Mes' }
     }
@@ -29,6 +30,7 @@ const menuRoutes = {
 
 menuConfig = {
     initialRouteName: 'Today',
+    contentComponent: Menu,
     contentOptions: {
         labelStyle: {
             fontFamily: commomStyles.fontFamily,

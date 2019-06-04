@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import backgroundImage from '../../assets/imgs/login.jpg';
 import AuthInput from '../componentes/AuthInput';
 import { server, showError } from '../commom';
@@ -48,7 +49,9 @@ export default class Auth extends React.Component {
             });
 
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`;
-            this.props.navigation.navigate('Home');
+            AsyncStorage.setItem('userData', JSON.stringify(res.data));
+
+            this.props.navigation.navigate('Home', res.data);
         } catch (erro) {
             showError(erro);
         }

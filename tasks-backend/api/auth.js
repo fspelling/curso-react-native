@@ -7,7 +7,7 @@ module.exports = (app) => {
         if (!req.body.address || !req.body.password)
             return res.status(400).send('dados incompletos');
         
-        const user = await app.db('users').where({ address: req.body.address }).first();
+        const user = await app.db('users').whereRaw('LOWER(address) = LOWER(?)', req.body.address).first();
 
         if (user) {
             bcrypt.compare(req.body.password, user.password, (erro, isMath) => {

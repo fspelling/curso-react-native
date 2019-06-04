@@ -110,6 +110,9 @@ export default class Agenda extends React.Component {
                     onCancel={() => this.setState({ showModal: false })} />
                 <ImageBackground source={backgroundImage} style={styles.background}>
                     <View style={styles.iconBar}>
+                        <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                            <Icon name='bar' size={20} color={commomStyles.colors.secondary} />
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={this.toggleFilter}>
                             <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'} size={20} color={commomStyles.colors.secondary} />
                         </TouchableOpacity>
@@ -161,6 +164,6 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 30 : 10,
         marginHorizontal: 20,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+        justifyContent: 'space-between',
     }
 });
