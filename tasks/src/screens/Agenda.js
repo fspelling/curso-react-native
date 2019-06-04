@@ -11,10 +11,15 @@ import Task from '../componentes/Task';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Action from 'react-native-action-button';
 import NewTask from './NewTask';
-import axios from 'axios';
 import { server, showError } from '../commom';
+import StorageTasks from '../services/StorageTasks';
 
 export default class Agenda extends React.Component {
+    constructor(props) {
+        super(props);
+        this.storageTasks = new StorageTasks();
+    }
+
     state = {
         tasks: [],
         visibleTasks: [],
@@ -41,7 +46,8 @@ export default class Agenda extends React.Component {
 
     deleteTask = async (id) => {
         try {
-            await axios.delete(`${server}/tasks/${id}`);
+            await this.storageTasks.delete(id);
+            //await axios.delete(`${server}/tasks/${id}`);
             this.setState({ showModal: false }, this.loadTasks);
         } catch (erro) {
             showError(erro);
@@ -50,7 +56,8 @@ export default class Agenda extends React.Component {
 
     addTask = async (task) => {
         try {
-            await axios.post(`${server}/tasks/`, { desc: task.desc, estimateAt: task.date });
+            await this.storageTasks.post(task);
+            //await axios.post(`${server}/tasks/`, { desc: task.desc, estimateAt: task.date });
             this.setState({ showModal: false }, this.loadTasks);
         } catch (erro) {
             showError(erro);
@@ -63,7 +70,8 @@ export default class Agenda extends React.Component {
 
     togleTaskCheck = async (id) => {
         try {
-            await axios.put(`${server}/tasks/${id}/toggle`);
+            await this.storageTasks.put(id);
+            //await axios.put(`${server}/tasks/${id}/toggle`);
             await this.loadTasks();
         } catch (erro) {
             showError(erro);
@@ -73,9 +81,10 @@ export default class Agenda extends React.Component {
     loadTasks = async () => {
         try {
             const maxDate = moment().add(this.props.daysAhead, 'days').format('YYYY-MM-DD 23:59');
-            const res = await axios.get(`${server}/tasks?date=${maxDate}`);
+            const res = await this.storageTasks.get(maxDate);
+            //const res = await axios.get(`${server}/tasks?date=${maxDate}`);
 
-            this.setState({ tasks: res.data }, this.filterTasks);
+            this.setState({ tasks: res }, this.filterTasks);
         } catch (erro) {
             showError(erro);
         }

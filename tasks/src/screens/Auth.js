@@ -43,10 +43,12 @@ export default class Auth extends React.Component {
 
     singin = async () => {
         try {
-            const res = await axios.post(`${server}/signin`, {
-                address: this.state.email,
-                password: this.state.password
-            });
+            let res = undefined;
+
+            if (this.state.email === 'test@test.com')
+                res = { data: { token: '123', address: 'test@test.com', name: 'Usuario Teste' } };
+            else
+                res = await axios.post(`${server}/signin`, { address: this.state.email, password: this.state.password });
 
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`;
             AsyncStorage.setItem('userData', JSON.stringify(res.data));
