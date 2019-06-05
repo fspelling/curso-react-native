@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import moment from 'moment';
 import 'moment/locale/pt-br';
 import DateUtils from '../utils/DateUtils';
 
@@ -42,7 +41,7 @@ export default class StorageTasks {
         await AsyncStorage.setItem('tasks', JSON.stringify(tasksList));
     }
 
-    get = async (date) => {
+    get = async (date, userId) => {
         const tasksData = await AsyncStorage.getItem('tasks');
         let tasksReturn = [];
 

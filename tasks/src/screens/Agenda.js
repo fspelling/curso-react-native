@@ -11,8 +11,9 @@ import Task from '../componentes/Task';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Action from 'react-native-action-button';
 import NewTask from './NewTask';
-import { server, showError } from '../commom';
+import { showError } from '../commom';
 import StorageTasks from '../storage/StorageTasks';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Agenda extends React.Component {
     constructor(props) {
@@ -80,8 +81,11 @@ export default class Agenda extends React.Component {
 
     loadTasks = async () => {
         try {
+            const userData = await AsyncStorage.getItem('userData');
+            const userJson = JSON.parse(userData) || {};
+
             const maxDate = moment().add(this.props.daysAhead, 'days').format('YYYY-MM-DD 23:59');
-            const res = await this.storageTasks.get(maxDate);
+            const res = await this.storageTasks.get(maxDate, userJson.userId);
 
             this.setState({ tasks: res }, this.filterTasks);
         } catch (erro) {
