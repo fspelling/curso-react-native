@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import Loading from '../componentes/Loading';
 
 export default class AuthOrApp extends React.Component {
     componentWillMount  = async () => {
@@ -18,18 +18,7 @@ export default class AuthOrApp extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size='large'/>
-            </View>
+            <Loading isLoading={true} />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'black'
-    }
-});

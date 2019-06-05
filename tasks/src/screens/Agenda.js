@@ -14,6 +14,8 @@ import NewTask from './NewTask';
 import { showError } from '../commom';
 import StorageTasks from '../storage/StorageTasks';
 import AsyncStorage from '@react-native-community/async-storage';
+import TaskServiceSync from '../services/TaskServiceSync';
+import Loading from '../componentes/Loading';
 
 export default class Agenda extends React.Component {
     constructor(props) {
@@ -25,7 +27,8 @@ export default class Agenda extends React.Component {
         tasks: [],
         visibleTasks: [],
         showDoneTasks: true,
-        showModal: false
+        showModal: false,
+        isLoading: false
     };
 
     filterTasks = () => {
@@ -67,6 +70,10 @@ export default class Agenda extends React.Component {
     }
 
     componentDidMount = async () => {
+        this.setState({ isLoading: true });
+        await (new TaskServiceSync()).init();
+        this.setState({ isLoading: false });
+
         this.loadTasks();
     }
 
@@ -116,6 +123,12 @@ export default class Agenda extends React.Component {
                 break;
         }
 
+        const component = this.state.isLoading ? (<Loading isLoading={true} />) : this.renderComponent(backgroundImage, styleColor);
+
+        return component;
+    }
+
+    renderComponent(backgroundImage, styleColor) {
         return (
             <View style={styles.container}>
                 <NewTask isVisible={this.state.showModal} onSave={this.addTask}
