@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+import DateUtils from '../utils/DateUtils';
 
 export default class StorageTasks {
+    constructor () {
+        this.dateUtils = new DateUtils();
+    }
+
     delete = async (id) => {
         const tasksData = await AsyncStorage.getItem('tasks');
 
@@ -21,10 +28,10 @@ export default class StorageTasks {
         }
     }
 
-    post = async (task) => {
+    post = async (task, userId) => {
         let tasksList = [];
 
-        const newTask = { id: Math.random(), ...task, doneAt: null };
+        const newTask = { id: Math.random(), ...task, doneAt: null, userId };
         const tasksData = await AsyncStorage.getItem('tasks');
 
         if (tasksData)
@@ -40,10 +47,10 @@ export default class StorageTasks {
         let tasksReturn = [];
 
         if (tasksData) {
-            const tasksList = JSON.parse(tasksData) || [];
+            const dateMax = this.dateUtils.StringToDate(date);
 
-            //tasksReturn = tasksList.filter(item => item.estimateAt <= date);
-            tasksReturn = [...tasksList];
+            const tasksList = JSON.parse(tasksData) || [];
+            tasksReturn = tasksList.filter(item => this.dateUtils.StringToDate(item.date) <= dateMax && item.userId === userId);
         }
 
         return tasksReturn;

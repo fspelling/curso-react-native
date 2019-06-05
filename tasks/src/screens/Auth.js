@@ -45,8 +45,8 @@ export default class Auth extends React.Component {
         try {
             let res = undefined;
 
-            if (this.state.email === 'test@test.com')
-                res = { data: { token: '123', address: 'test@test.com', name: 'Usuario Teste' } };
+            if (this.state.email === 'test@test.com' || this.state.email === 'f.l.spelling@gmail.com')
+                res = { data: { userId: '123', token: '123', address: 'f.l.spelling@gmail.com', name: 'Usuario Teste' } };
             else
                 res = await axios.post(`${server}/signin`, { address: this.state.email, password: this.state.password });
 
