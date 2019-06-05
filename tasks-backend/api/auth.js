@@ -17,6 +17,7 @@ module.exports = (app) => {
                 const payLoad = { id: user.id };
 
                 res.json({
+                    userId: user.id,
                     name: user.name,
                     address: user.address,
                     token: jwt.encode(payLoad, authSecret)
