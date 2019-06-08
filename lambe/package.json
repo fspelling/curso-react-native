@@ -8,15 +8,15 @@
   },
   "dependencies": {
     "react": "16.4.1",
-    "react-native": "0.56.0",
+    "react-native": "0.59.8",
     "axios": "0.18.0",
     "react-native-gravatar": "1.0.2",
     "react-native-image-picker": "0.27.1",
     "react-native-vector-icons": "5.0.0",
-    "react-native-navigation": "2.14.2",
+    "react-navigation": "2.14.2",
     "react-redux": "5.0.7",
     "redux": "4.0.0",
-    "react-thunk": "2.3.0"
+    "redux-thunk": "2.3.0"
   },
   "devDependencies": {
     "babel-jest": "24.8.0",
@@ -28,6 +28,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": [ "./assets/fonts" ]
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

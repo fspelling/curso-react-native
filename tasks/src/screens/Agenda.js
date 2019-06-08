@@ -14,21 +14,20 @@ import NewTask from './NewTask';
 import { showError } from '../commom';
 import StorageTasks from '../storage/StorageTasks';
 import AsyncStorage from '@react-native-community/async-storage';
-import TaskServiceSync from '../componentes/TaskServiceSync';
-import Loading from '../componentes/Loading';
+import TaskServiceSync from '../services/TaskServiceSync';
 
 export default class Agenda extends React.Component {
     constructor(props) {
         super(props);
         this.storageTasks = new StorageTasks();
+        this.taskServiceSync = new TaskServiceSync();
     }
 
     state = {
         tasks: [],
         visibleTasks: [],
         showDoneTasks: true,
-        showModal: false,
-        isLoading: false
+        showModal: false
     };
 
     filterTasks = () => {
@@ -70,7 +69,8 @@ export default class Agenda extends React.Component {
     }
 
     componentDidMount = async () => {
-        this.loadTasks();
+        await this.taskServiceSync.init();
+        await this.loadTasks();
     }
 
     togleTaskCheck = async (id) => {
@@ -119,16 +119,8 @@ export default class Agenda extends React.Component {
                 break;
         }
 
-        const component = this.state.isLoading ? <Loading /> : this.renderComponent(backgroundImage, styleColor);
-
-        return component;
-    }
-
-    renderComponent(backgroundImage, styleColor) {
         return (
             <View style={styles.container}>
-                <TaskServiceSync sync={true} timeout={6000} showLoading={() => this.setState({ isLoading: true })}
-                    hideLoading={() => this.setState({ isLoading: false })} />
                 <NewTask isVisible={this.state.showModal} onSave={this.addTask}
                     onCancel={() => this.setState({ showModal: false })} />
                 <ImageBackground source={backgroundImage} style={styles.background}>

@@ -20,6 +20,24 @@ module.exports = (app) => {
             .catch(erro => res.status(500).json(erro));
     }
 
+    const saveTaskLote = (req, res) => {
+        const listTask = req.body.tasks || [];
+
+        if (listTask.length === 0)
+            return res.status(400).send('Lista de task vazia');
+
+        listTask.forEach(async task => {
+            try {
+                await app.db('tasks').where({ id: task.id, userId: task.userId }).del()
+                await app.db('tasks').insert(task);
+                
+                res.status(204).send();
+            } catch (erro) {
+                res.status(500).json(erro);
+            }
+        });
+    }
+
     const removeTask = (req, res) => {
         app.db('tasks').where({ id: req.params.id, userId: req.user.id }).del()
             .then(rowDeleted => {
@@ -49,5 +67,5 @@ module.exports = (app) => {
             .catch(erro => res.status(500).json(erro));
     }
 
-    return { getTasks, saveTask, removeTask, toggleTask };
+    return { getTasks, saveTask, saveTaskLote, removeTask, toggleTask };
 }

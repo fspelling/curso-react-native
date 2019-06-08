@@ -29,7 +29,7 @@ export default class StorageTasks {
     post = async (task, userId) => {
         let tasksList = [];
 
-        const newTask = { id: Math.random(), ...task, doneAt: null, userId };
+        const newTask = { id: Math.round(Math.random() * 1000000), ...task, doneAt: null, userId };
         const tasksData = await AsyncStorage.getItem('tasks');
 
         if (tasksData)
