@@ -8,7 +8,7 @@ export default class Post extends React.Component {
         return (
             <View style={styles.container}>
                 <Image source={this.props.image} style={styles.image} />
-                <Author email='fulano@gmail.com' nickName='Fulano' />
+                <Author email='f.l.spelling@gmail.com' nickName='Fulano' />
                 <Comments comments={this.props.comments} />
             </View>
         );
