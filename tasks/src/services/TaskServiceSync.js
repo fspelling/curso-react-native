@@ -3,7 +3,7 @@ import axios from 'axios';
 import { server } from '../commom';
 
 export default class TaskServiceSync {
-    constructor(sync = true, timeout = 3600000) {
+    constructor(sync = true, timeout = 600000) {
         this.exec;
         this.sync = sync;
         this.timeout = timeout;
