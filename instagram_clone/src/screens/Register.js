@@ -1,30 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 
-export default class Login extends React.Component {
+export default class Register extends React.Component {
     state = {
+        name: '',
         email: '',
         password: ''
     };
 
-    login = () => {
-        this.props.navigation.navigate('Profile');
-    }
-
     render() {
         return (
             <View style={styles.container}>
-                <TextInput placeholder='Email' style={styles.input} autoFocus={true}
+                <TextInput placeholder='Nome' style={styles.input} autoFocus={true}
+                    value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+                <TextInput placeholder='Email' style={styles.input}
                     keyboardType='email-address' value={this.state.email}
                     onChangeText={(email) => this.setState({ email })} />
                 <TextInput placeholder='Password' style={styles.input}
                     secureTextEntry={true} value={this.state.password}
                     onChangeText={(password) => this.setState({ password })} />
-                <TouchableOpacity onPress={this.login} style={styles.buttom}>
-                    <Text style={styles.buttomText}>Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { () => this.props.navigation.navigate('Register') }} style={styles.buttom}>
-                    <Text style={styles.buttomText}>Criar nova conta</Text>
+                <TouchableOpacity onPress={() => { }} style={styles.buttom}>
+                    <Text style={styles.buttomText}>Salvar</Text>
                 </TouchableOpacity>
             </View>
         );
