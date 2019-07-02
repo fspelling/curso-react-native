@@ -4,7 +4,7 @@ import postReducer from './reducers/post';
 
 const reducers = combineReducers({
     user: userReducer,
-    post: postReducer
+    posts: postReducer
 });
 
 export default storeConfig = () => {

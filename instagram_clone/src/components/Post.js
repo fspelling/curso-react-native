@@ -11,7 +11,7 @@ export default class Post extends React.Component {
                 <Image source={this.props.image} style={styles.image} />
                 <Author email={this.props.email} nickName={this.props.nickName} />
                 <Comments comments={this.props.comments} />
-                <AddComment />
+                <AddComment idPost={this.props.id} />
             </View>
         );
     }

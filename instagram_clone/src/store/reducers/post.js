@@ -1,4 +1,4 @@
-import { POST_ADD } from '../actions/actionTypes';
+import { POST_ADD, COMMENT_ADD } from '../actions/actionTypes';
 
 const initialState = {
     posts: [
@@ -31,6 +31,20 @@ export default reducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: state.posts.concat({ ...action.payload })
+            };
+        case COMMENT_ADD:
+            return {
+                ...state,
+                posts: state.posts.map(post => {
+                    if (post.id === action.payload.idPost) {
+                        if (post.comments)
+                            post.comments = post.comments.concat(action.payload.comment);
+                        else
+                            post.comments = [action.payload.comment];
+                    }
+
+                    return post;
+                })
             };
         default:
             return state;

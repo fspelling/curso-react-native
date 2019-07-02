@@ -1,15 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback as TWF, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback as TWF } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
+import { addComment } from '../store/actions/post';
 
-export default class AddComment extends React.Component {
+class AddComment extends React.Component {
     state = {
         comment: '',
         editMode: false
     };
 
     handleAddComment = () => {
-        Alert.alert('Adiciondo', this.state.comment);
+        this.props.onAddComment({
+            idPost: this.props.idPost,
+            comment: {
+                nickname: this.props.name,
+                comment: this.state.comment
+            }
+        });
+
+        this.setState({ comment: '', editMode: false });
     }
 
     render() {
@@ -59,3 +69,17 @@ const styles = StyleSheet.create({
         width: '90%'
     }
 });
+
+const mapStateToProps = ({user}) => {
+    return {
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddComment: (comment) => dispatch(addComment(comment))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComment);
