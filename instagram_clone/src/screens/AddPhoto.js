@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Text, ScrollView, Platform, TextInput, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Platform, TextInput, Image, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
 import { addPost } from '../store/actions/post';
+
+const noUser = 'Voce precisa se autenticar para postar fotos';
 
 class AddPhoto extends React.Component {
     state = {
@@ -11,6 +13,11 @@ class AddPhoto extends React.Component {
     };
 
     pickImage = () => {
+        if (!this.props.name) {
+            Alert.alert('Atencao', noUser);
+            return;
+        }
+
         ImagePicker.showImagePicker({
             title: 'Escolha a imagem',
             maxHeight: 600,
@@ -21,6 +28,11 @@ class AddPhoto extends React.Component {
     }
 
     save = async () => {
+        if (!this.props.name) {
+            Alert.alert('Atencao', noUser);
+            return;
+        }
+
         this.props.onSavePost({
             id: Math.random(),
             nickname: this.props.name,
@@ -47,7 +59,7 @@ class AddPhoto extends React.Component {
                         <Text style={styles.buttomText}>Escolha a foto</Text>
                     </TouchableOpacity>
                     <TextInput placeholder='Algum comentario?' style={styles.input} value={this.state.comment}
-                        onChangeText={(comment) => this.setState({ comment })} />
+                        onChangeText={(comment) => this.setState({ comment })} editable={this.props.name != null} />
                     <TouchableOpacity onPress={this.save} style={styles.buttom}>
                         <Text style={styles.buttomText}>Salvar</Text>
                     </TouchableOpacity>
