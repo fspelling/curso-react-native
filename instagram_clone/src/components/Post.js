@@ -11,7 +11,7 @@ class Post extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Image source={this.props.image} style={styles.image} />
+                <Image source={{ uri: this.props.image }} style={styles.image} />
                 <Author email={this.props.email} nickName={this.props.nickName} />
                 <Comments comments={this.props.comments} />
                 {comment}
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({ user }) => {
     return {
         name: user.name
     };

@@ -15,11 +15,11 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
 
             bucket.upload('/tmp/imageToSave.jpg', {
                 uploadType: 'media',
-                destination: `/posts/${id}.jpeg`,
+                destination: `/posts/${id}.jpg`,
                 metadata: {
                     metadata: {
                         content: 'image/jpeg',
-                        firebaseStorageDownloadToken: id
+                        firebaseStorageDownloadTokens: id
                     }
                 }
             }, (erro, file) => {
@@ -29,7 +29,7 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
                 }
 
                 const fileName = encodeURIComponent(file.name);
-                const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${fileName}?alt=media&token=${id}`;
+                const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${fileName}?alt=media&token=${id}`
 
                 return response.status(201).json({ imageUrl: imageUrl });
             });

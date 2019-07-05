@@ -42,9 +42,13 @@ class AddPhoto extends React.Component {
                 comment: this.state.comment
             }]
         });
+    }
 
-        this.setState({ image: null, comment: '' });
-        this.props.navigation.navigate('Feed');
+    componentDidUpdate = (propsPrev) => {
+        if (propsPrev.isUploading && !this.props.isUploading) {
+            this.setState({ image: null, comment: '' });
+            this.props.navigation.navigate('Feed');
+        }
     }
 
     render() {
@@ -60,8 +64,8 @@ class AddPhoto extends React.Component {
                     </TouchableOpacity>
                     <TextInput placeholder='Algum comentario?' style={styles.input} value={this.state.comment}
                         onChangeText={(comment) => this.setState({ comment })} editable={this.props.name != null} />
-                    <TouchableOpacity onPress={this.save} style={styles.buttom}>
-                        <Text style={styles.buttomText}>Salvar</Text>
+                    <TouchableOpacity onPress={this.save} style={styles.buttom} disabled={this.props.loading}>
+                        <Text style={[styles.buttomText, this.props.loading ? styles.buttomDisabled : null]}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -102,13 +106,17 @@ const styles = StyleSheet.create({
     buttomText: {
         fontSize: 20,
         color: '#FFF'
+    },
+    buttomDisabled: {
+        backgroundColor: '#AAA'
     }
 });
 
-const mapDispatchToState = ({user}) => {
+const mapDispatchToState = ({user, posts}) => {
     return {
         name: user.name,
-        email: user.email
+        email: user.email,
+        loading: posts.isUploading
     };
 }
 
