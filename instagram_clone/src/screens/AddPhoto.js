@@ -45,7 +45,7 @@ class AddPhoto extends React.Component {
     }
 
     componentDidUpdate = (propsPrev) => {
-        if (propsPrev.isUploading && !this.props.isUploading) {
+        if (propsPrev.loading && !this.props.loading) {
             this.setState({ image: null, comment: '' });
             this.props.navigation.navigate('Feed');
         }

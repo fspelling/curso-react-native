@@ -12,7 +12,11 @@ class Login extends React.Component {
 
     login = () => {
         this.props.onlogin({ ...this.state });
-        this.props.navigation.navigate('Profile');
+    }
+
+    componentDidUpdate = (propsPrevs) => {
+        if(propsPrevs.isLoading && !this.props.isLoading)
+            this.props.navigation.navigate('Profile');
     }
 
     render() {
@@ -27,7 +31,7 @@ class Login extends React.Component {
                 <TouchableOpacity onPress={this.login} style={styles.buttom}>
                     <Text style={styles.buttomText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { () => this.props.navigation.navigate('Register') }} style={styles.buttom}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={styles.buttom}>
                     <Text style={styles.buttomText}>Criar nova conta</Text>
                 </TouchableOpacity>
             </View>
@@ -60,10 +64,16 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = ({ user }) => {
+    return {
+        isLoading: user.isLoading
+    };
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onlogin: (user) => dispatch(login(user))
     };
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

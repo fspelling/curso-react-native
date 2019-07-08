@@ -1,8 +1,9 @@
-import { SET_POST, COMMENT_ADD, CREATING_POST, CREATED_POST } from './actionTypes';
+import { SET_POST, CREATING_POST, CREATED_POST } from './actionTypes';
 import axios from 'axios';
+import { setMessage } from './message';
 
 export const addPost = (post) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
             dispatch(creatingPost());
 
@@ -16,21 +17,31 @@ export const addPost = (post) => {
             });
 
             post.image = resp.data.imageUrl;
-            const res = await axios.post('/posts.json', { ...post });
+            await axios.post(`/posts.json?auth=${getState().user.token}`, { ...post });
 
             dispatch(getPosts());
             dispatch(createdPost());
         } catch (error) {
-            console.debug('erro = ', error);
+            dispatch(setMessage({ title: 'Erro', message: `Erro: ${error}` }));
         }
     }
 }
 
-export const addComment = (comment) => {
-    return {
-        type: COMMENT_ADD,
-        payload: comment
-    };
+export const addComment = (payload, getState) => {
+    return async (dispatch) => {
+        try {
+            const res = await axios.get(`/posts/${payload.idPost}.json?auth=${getState().user.token}`);
+            if (res) {
+                const comments = res.data.comments || [];
+                comments.push(payload.comment);
+
+                await axios.patch(`/posts/${payload.idPost}.json`, { comments });
+                dispatch(getPosts());
+            }
+        } catch (error) {
+            dispatch(setMessage({ title: 'Erro', message: `Erro: ${error}` }));
+        }
+    }
 }
 
 export const getPosts = () => {
@@ -45,7 +56,7 @@ export const getPosts = () => {
             
             dispatch(setPost(posts.reverse()));
         } catch (error) {
-            console.log(error);
+            dispatch(setMessage({ title: 'Erro', message: `Erro: ${error}` }));
         }
     }
 }

@@ -1,25 +1,34 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { createUser } from '../store/actions/user';
 
-export default class Register extends React.Component {
+class Register extends React.Component {
     state = {
         name: '',
         email: '',
         password: ''
     };
 
+    componentDidUpdate = (propsPrevs) => {
+        if(propsPrevs.isLoading && !this.props.isLoading) {
+            this.setState({ name: '', email: '', password: '' });
+            this.props.navigation.navigate('Profile');
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <TextInput placeholder='Nome' style={styles.input} autoFocus={true}
-                    value={this.state.email} onChangeText={(email) => this.setState({ email })} />
+                    value={this.state.name} onChangeText={(name) => this.setState({ name })} />
                 <TextInput placeholder='Email' style={styles.input}
                     keyboardType='email-address' value={this.state.email}
                     onChangeText={(email) => this.setState({ email })} />
                 <TextInput placeholder='Password' style={styles.input}
                     secureTextEntry={true} value={this.state.password}
                     onChangeText={(password) => this.setState({ password })} />
-                <TouchableOpacity onPress={() => { }} style={styles.buttom}>
+                <TouchableOpacity onPress={() => { this.props.onCreateUser(this.state) }} style={styles.buttom}>
                     <Text style={styles.buttomText}>Salvar</Text>
                 </TouchableOpacity>
             </View>
@@ -51,3 +60,17 @@ const styles = StyleSheet.create({
         color: '#FFF'
     }
 });
+
+const mapStateToProps = ({ user }) => {
+    return {
+        isLoading: user.isLoading
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onCreateUser: (user) => dispatch(createUser(user))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
